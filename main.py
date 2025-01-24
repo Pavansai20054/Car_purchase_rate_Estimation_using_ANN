@@ -58,4 +58,4 @@ with col1:
         st.write(f"The estimated car purchase rate is: ${scaled_prediction:,.4f}")
 
 with col2:
-    st.image("image\image.jpg")
+    st.image(r"image\image.jpg")
