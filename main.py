@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model #type: ignore
 import pickle
 from sklearn.preprocessing import LabelEncoder
 
