@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
-from tensorflow.keras.models import load_model #type: ignore
+from tensorflow.keras.models import load_model  # type: ignore
 import pickle
-from sklearn.preprocessing import LabelEncoder
+from tensorflow.keras.losses import MeanSquaredError  # Explicit import of mse
+import warnings 
+warnings.filterwarnings("ignore")
 
 # Streamlit page config
 st.set_page_config(
@@ -12,8 +14,18 @@ st.set_page_config(
 
 st.title("Estimation of Amount Paid for a Car")
 
-# Load and compile the model
-model = load_model("car_purchase_rate.h5") 
+# Cache the model to keep it loaded across runs
+@st.cache_resource
+def load_my_model():
+    model = load_model("car_purchase_rate.h5", compile=False)  # Load the model without compilation
+    model.compile(optimizer='adam', loss=MeanSquaredError())  # Manually compile the model with mse
+    return model
+
+# Load model in session state if not already present
+if "model" not in st.session_state:
+    st.session_state["model"] = load_my_model()
+
+model = st.session_state["model"]
 
 # Load the fitted LabelEncoder from the saved file
 with open('label_encoder.pkl', 'rb') as file:
