@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from tensorflow.keras.models import load_model  # type: ignore
 import pickle
-from tensorflow.keras.losses import MeanSquaredError  # Explicit import of mse
+from tensorflow.keras.losses import MeanSquaredError  # type: ignore
 import warnings 
 warnings.filterwarnings("ignore")
 
